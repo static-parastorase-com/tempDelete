@@ -1857,6 +1857,73 @@ class JatakaChakraTests {
     }
 
     @Test
+    fun geminiAscendantRahuPredictions_returnsExactProvidedTextForAll12Houses() {
+        val h1 = JatakaGeminiRahuPredictions.getPrediction(1, JatakaLanguage.ENGLISH)
+        assertEquals("Rahu in the 1st House (Gemini)", h1.title)
+        assertTrue(h1.text.contains("may be tall and self-confident"))
+
+        val h2 = JatakaGeminiRahuPredictions.getPrediction(2, JatakaLanguage.ENGLISH)
+        assertEquals("Rahu in the 2nd House (Cancer)", h2.title)
+        assertTrue(h2.text.contains("may face loss of savings and remain worried about money"))
+
+        val h3 = JatakaGeminiRahuPredictions.getPrediction(3, JatakaLanguage.ENGLISH)
+        assertEquals("Rahu in the 3rd House (Leo)", h3.title)
+        assertTrue(h3.text.contains("may face stress or separation from siblings"))
+
+        val h4 = JatakaGeminiRahuPredictions.getPrediction(4, JatakaLanguage.ENGLISH)
+        assertEquals("Rahu in the 4th House (Virgo)", h4.title)
+        assertTrue(h4.text.contains("may receive less happiness from the mother"))
+
+        val h5 = JatakaGeminiRahuPredictions.getPrediction(5, JatakaLanguage.ENGLISH)
+        assertEquals("Rahu in the 5th House (Libra)", h5.title)
+        assertTrue(h5.text.contains("may face difficulty in education and in making clear decisions"))
+
+        val h6 = JatakaGeminiRahuPredictions.getPrediction(6, JatakaLanguage.ENGLISH)
+        assertEquals("Rahu in the 6th House (Scorpio)", h6.title)
+        assertTrue(h6.text.contains("has a strong influence over enemies"))
+
+        val h7 = JatakaGeminiRahuPredictions.getPrediction(7, JatakaLanguage.ENGLISH)
+        assertEquals("Rahu in the 7th House (Sagittarius)", h7.title)
+        assertTrue(h7.text.contains("may face problems in marriage and daily work"))
+
+        val h8 = JatakaGeminiRahuPredictions.getPrediction(8, JatakaLanguage.ENGLISH)
+        assertEquals("Rahu in the 8th House (Capricorn)", h8.title)
+        assertTrue(h8.text.contains("worries a lot and may sometimes face serious or nervous health problems"))
+
+        val h9 = JatakaGeminiRahuPredictions.getPrediction(9, JatakaLanguage.ENGLISH)
+        assertEquals("Rahu in the 9th House (Aquarius)", h9.title)
+        assertTrue(h9.text.contains("may have a weak relationship with the father"))
+
+        val h10 = JatakaGeminiRahuPredictions.getPrediction(10, JatakaLanguage.ENGLISH)
+        assertEquals("Rahu in the 10th House (Pisces)", h10.title)
+        assertTrue(h10.text.contains("use unusual or difficult methods to progress in work"))
+
+        val h11 = JatakaGeminiRahuPredictions.getPrediction(11, JatakaLanguage.ENGLISH)
+        assertEquals("Rahu in the 11th House (Aries)", h11.title)
+        assertTrue(h11.text.contains("can earn a high income and receive good gains"))
+
+        val h12 = JatakaGeminiRahuPredictions.getPrediction(12, JatakaLanguage.ENGLISH)
+        assertEquals("Rahu in the 12th House (Taurus)", h12.title)
+        assertTrue(h12.text.contains("may face trouble because of heavy expenses"))
+    }
+
+    @Test
+    fun geminiAscendantRahuPredictions_multilingualSupport() {
+        val languages = listOf(
+            JatakaLanguage.ENGLISH, JatakaLanguage.HINDI, JatakaLanguage.KANNADA,
+            JatakaLanguage.TAMIL, JatakaLanguage.MALAYALAM, JatakaLanguage.TELUGU
+        )
+
+        languages.forEach { lang ->
+            (1..12).forEach { house ->
+                val pred = JatakaGeminiRahuPredictions.getPrediction(house, lang)
+                assertTrue("Title for ${lang.name} house $house must not be blank", pred.title.isNotBlank())
+                assertTrue("Text for ${lang.name} house $house must not be blank", pred.text.isNotBlank())
+            }
+        }
+    }
+
+    @Test
     fun genderNeutrality_producesIdenticalAnalysisContent() {
         val engine = JatakaSimpleEngine()
         val maleInput = narasimha1030Input.copy(gender = "Male")

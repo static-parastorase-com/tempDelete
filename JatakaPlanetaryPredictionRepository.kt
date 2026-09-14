@@ -165,6 +165,12 @@ object JatakaPlanetaryPredictionRepository {
             return Pair(pred.title, pred.text)
         }
 
+        // Specialized Dataset 26: Gemini Ascendant - Rahu
+        if (ascendantSign == JatakaSign.GEMINI && planet == JatakaPlanet.RAHU) {
+            val pred = JatakaGeminiRahuPredictions.getPrediction(house, language)
+            return Pair(pred.title, pred.text)
+        }
+
         // Generic fallback synthesis for un-registered planet/ascendant combinations
         val planetNameEn = planet.name.lowercase().replaceFirstChar { it.uppercase() }
         val planetNameHi = JatakaVargaEngine.getHindiPlanetName(planet)

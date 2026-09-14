@@ -1790,6 +1790,73 @@ class JatakaChakraTests {
     }
 
     @Test
+    fun geminiAscendantSaturnPredictions_returnsExactProvidedTextForAll12Houses() {
+        val h1 = JatakaGeminiSaturnPredictions.getPrediction(1, JatakaLanguage.ENGLISH)
+        assertEquals("Saturn in the 1st House (Gemini)", h1.title)
+        assertTrue(h1.text.contains("fortunate, endowed with good longevity, and deeply focused on their future growth"))
+
+        val h2 = JatakaGeminiSaturnPredictions.getPrediction(2, JatakaLanguage.ENGLISH)
+        assertEquals("Saturn in the 2nd House (Cancer)", h2.title)
+        assertTrue(h2.text.contains("experiences depletion of accumulated savings and recurring friction within the family circle"))
+
+        val h3 = JatakaGeminiSaturnPredictions.getPrediction(3, JatakaLanguage.ENGLISH)
+        assertEquals("Saturn in the 3rd House (Leo)", h3.title)
+        assertTrue(h3.text.contains("Endowed with long life, the native toils relentlessly and engages in grueling physical labor"))
+
+        val h4 = JatakaGeminiSaturnPredictions.getPrediction(4, JatakaLanguage.ENGLISH)
+        assertEquals("Saturn in the 4th House (Virgo)", h4.title)
+        assertTrue(h4.text.contains("experiences some deficiency in maternal warmth or domestic ease"))
+
+        val h5 = JatakaGeminiSaturnPredictions.getPrediction(5, JatakaLanguage.ENGLISH)
+        assertEquals("Saturn in the 5th House (Libra)", h5.title)
+        assertTrue(h5.text.contains("Saturn attains exaltation (Uccha) here. The native possesses deep wisdom"))
+
+        val h6 = JatakaGeminiSaturnPredictions.getPrediction(6, JatakaLanguage.ENGLISH)
+        assertEquals("Saturn in the 6th House (Scorpio)", h6.title)
+        assertTrue(h6.text.contains("accomplishes difficult tasks through elaborate, demanding, and intricate strategies"))
+
+        val h7 = JatakaGeminiSaturnPredictions.getPrediction(7, JatakaLanguage.ENGLISH)
+        assertEquals("Saturn in the 7th House (Sagittarius)", h7.title)
+        assertTrue(h7.text.contains("fortunate, enjoys good longevity, and achieves steady progress and fame"))
+
+        val h8 = JatakaGeminiSaturnPredictions.getPrediction(8, JatakaLanguage.ENGLISH)
+        assertEquals("Saturn in the 8th House (Capricorn)", h8.title)
+        assertTrue(h8.text.contains("Saturn resides in its own sign (Swakshetra). The native enjoys long life"))
+
+        val h9 = JatakaGeminiSaturnPredictions.getPrediction(9, JatakaLanguage.ENGLISH)
+        assertEquals("Saturn in the 9th House (Aquarius)", h9.title)
+        assertTrue(h9.text.contains("Saturn occupies its Moolatrikona sign. Highly fortunate and blessed with longevity"))
+
+        val h10 = JatakaGeminiSaturnPredictions.getPrediction(10, JatakaLanguage.ENGLISH)
+        assertEquals("Saturn in the 10th House (Pisces)", h10.title)
+        assertTrue(h10.text.contains("experiences loss, distance, or sorrow regarding the father, yet achieves a commanding rise"))
+
+        val h11 = JatakaGeminiSaturnPredictions.getPrediction(11, JatakaLanguage.ENGLISH)
+        assertEquals("Saturn in the 11th House (Aries)", h11.title)
+        assertTrue(h11.text.contains("Saturn is debilitated (Neecha) here. The native faces financial volatility"))
+
+        val h12 = JatakaGeminiSaturnPredictions.getPrediction(12, JatakaLanguage.ENGLISH)
+        assertEquals("Saturn in the 12th House (Taurus)", h12.title)
+        assertTrue(h12.text.contains("endures inner restlessness, high expenditures, and occasional financial losses"))
+    }
+
+    @Test
+    fun geminiAscendantSaturnPredictions_multilingualSupport() {
+        val languages = listOf(
+            JatakaLanguage.ENGLISH, JatakaLanguage.HINDI, JatakaLanguage.KANNADA,
+            JatakaLanguage.TAMIL, JatakaLanguage.MALAYALAM, JatakaLanguage.TELUGU
+        )
+
+        languages.forEach { lang ->
+            (1..12).forEach { house ->
+                val pred = JatakaGeminiSaturnPredictions.getPrediction(house, lang)
+                assertTrue("Title for ${lang.name} house $house must not be blank", pred.title.isNotBlank())
+                assertTrue("Text for ${lang.name} house $house must not be blank", pred.text.isNotBlank())
+            }
+        }
+    }
+
+    @Test
     fun genderNeutrality_producesIdenticalAnalysisContent() {
         val engine = JatakaSimpleEngine()
         val maleInput = narasimha1030Input.copy(gender = "Male")

@@ -1924,6 +1924,73 @@ class JatakaChakraTests {
     }
 
     @Test
+    fun geminiAscendantKetuPredictions_returnsExactProvidedTextForAll12Houses() {
+        val h1 = JatakaGeminiKetuPredictions.getPrediction(1, JatakaLanguage.ENGLISH)
+        assertEquals("Ketu in the 1st House (Gemini)", h1.title)
+        assertTrue(h1.text.contains("physical weakness, anxiety"))
+
+        val h2 = JatakaGeminiKetuPredictions.getPrediction(2, JatakaLanguage.ENGLISH)
+        assertEquals("Ketu in the 2nd House (Cancer)", h2.title)
+        assertTrue(h2.text.contains("financial loss, frustration in building wealth"))
+
+        val h3 = JatakaGeminiKetuPredictions.getPrediction(3, JatakaLanguage.ENGLISH)
+        assertEquals("Ketu in the 3rd House (Leo)", h3.title)
+        assertTrue(h3.text.contains("worries and difficulties concerning siblings"))
+
+        val h4 = JatakaGeminiKetuPredictions.getPrediction(4, JatakaLanguage.ENGLISH)
+        assertEquals("Ketu in the 4th House (Virgo)", h4.title)
+        assertTrue(h4.text.contains("obstacles involving land and buildings"))
+
+        val h5 = JatakaGeminiKetuPredictions.getPrediction(5, JatakaLanguage.ENGLISH)
+        assertEquals("Ketu in the 5th House (Libra)", h5.title)
+        assertTrue(h5.text.contains("difficulties in education, mental worries"))
+
+        val h6 = JatakaGeminiKetuPredictions.getPrediction(6, JatakaLanguage.ENGLISH)
+        assertEquals("Ketu in the 6th House (Scorpio)", h6.title)
+        assertTrue(h6.text.contains("great influence over enemies"))
+
+        val h7 = JatakaGeminiKetuPredictions.getPrediction(7, JatakaLanguage.ENGLISH)
+        assertEquals("Ketu in the 7th House (Sagittarius)", h7.title)
+        assertTrue(h7.text.contains("spouse may possess unusual strength"))
+
+        val h8 = JatakaGeminiKetuPredictions.getPrediction(8, JatakaLanguage.ENGLISH)
+        assertEquals("Ketu in the 8th House (Capricorn)", h8.title)
+        assertTrue(h8.text.contains("restlessness and worries in daily life"))
+
+        val h9 = JatakaGeminiKetuPredictions.getPrediction(9, JatakaLanguage.ENGLISH)
+        assertEquals("Ketu in the 9th House (Aquarius)", h9.title)
+        assertTrue(h9.text.contains("worries concerning destiny"))
+
+        val h10 = JatakaGeminiKetuPredictions.getPrediction(10, JatakaLanguage.ENGLISH)
+        assertEquals("Ketu in the 10th House (Pisces)", h10.title)
+        assertTrue(h10.text.contains("loss and worry concerning status or position"))
+
+        val h11 = JatakaGeminiKetuPredictions.getPrediction(11, JatakaLanguage.ENGLISH)
+        assertEquals("Ketu in the 11th House (Aries)", h11.title)
+        assertTrue(h11.text.contains("strength in matters of income"))
+
+        val h12 = JatakaGeminiKetuPredictions.getPrediction(12, JatakaLanguage.ENGLISH)
+        assertEquals("Ketu in the 12th House (Taurus)", h12.title)
+        assertTrue(h12.text.contains("work hard to manage expenses"))
+    }
+
+    @Test
+    fun geminiAscendantKetuPredictions_multilingualSupport() {
+        val languages = listOf(
+            JatakaLanguage.ENGLISH, JatakaLanguage.HINDI, JatakaLanguage.KANNADA,
+            JatakaLanguage.TAMIL, JatakaLanguage.MALAYALAM, JatakaLanguage.TELUGU
+        )
+
+        languages.forEach { lang ->
+            (1..12).forEach { house ->
+                val pred = JatakaGeminiKetuPredictions.getPrediction(house, lang)
+                assertTrue("Title for ${lang.name} house $house must not be blank", pred.title.isNotBlank())
+                assertTrue("Text for ${lang.name} house $house must not be blank", pred.text.isNotBlank())
+            }
+        }
+    }
+
+    @Test
     fun genderNeutrality_producesIdenticalAnalysisContent() {
         val engine = JatakaSimpleEngine()
         val maleInput = narasimha1030Input.copy(gender = "Male")

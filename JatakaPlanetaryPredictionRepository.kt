@@ -159,6 +159,12 @@ object JatakaPlanetaryPredictionRepository {
             return Pair(pred.title, pred.text)
         }
 
+        // Specialized Dataset 25: Gemini Ascendant - Saturn
+        if (ascendantSign == JatakaSign.GEMINI && planet == JatakaPlanet.SATURN) {
+            val pred = JatakaGeminiSaturnPredictions.getPrediction(house, language)
+            return Pair(pred.title, pred.text)
+        }
+
         // Generic fallback synthesis for un-registered planet/ascendant combinations
         val planetNameEn = planet.name.lowercase().replaceFirstChar { it.uppercase() }
         val planetNameHi = JatakaVargaEngine.getHindiPlanetName(planet)
